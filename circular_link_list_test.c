@@ -1,10 +1,11 @@
+// singly circular link list test
 
-//singly circular link list
+// creation of singly circular link list test
 
 #include <stdio.h>
 #include <stdlib.h>
-void append(void);
-void show(void);
+void create(void);
+void display(void);
 int length(void);
 
 struct node
@@ -12,29 +13,27 @@ struct node
     int data;
     struct node *next;
 };
-
-struct node *root = 0, *temp = 0;
+struct node *head = 0, *tail = 0;
 
 int main()
-
 {
     int ch, l = 0;
     while (1)
     {
-        printf("\t\tCircular link list \n");
-        printf("1. append\n");
-        printf("2. display\n");
-        printf("3. length\n");
-        printf("4. exit\n");
+        printf("\t\t\t\tCircular link list opearations\n");
+        printf("1. Append\n");
+        printf("2. Display\n");
+        printf("3. Length\n");
+        printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &ch);
         switch (ch)
         {
         case 1:
-            append();
+            create();
             break;
         case 2:
-            show();
+            display();
             break;
         case 3:
             l = length();
@@ -42,8 +41,9 @@ int main()
             break;
         case 4:
             exit(0);
+            break;
         default:
-            printf("Enter valid option\n");
+            printf("Enter valid options\n");
             break;
         }
     }
@@ -51,56 +51,57 @@ int main()
     return 0;
 }
 
-void append(void)
+void create(void)
 {
     struct node *new;
     new = (struct node *)malloc(sizeof(struct node));
     printf("Enter data: ");
     scanf("%d", &new->data);
     new->next = 0;
-    if (root == 0)
+    if (head == 0)
     {
-        root = temp = new;
+        head = tail = new;
+        // tail = new;
     }
     else
     {
-        temp->next = new;
-        temp = new;
-        temp->next = root;
+        tail->next = new;
+        tail = new;
+        tail->next = head;
     }
-    printf("Node inserted\n");
 }
 
-void show(void)
+void display(void)
 {
-    if (root == 0)
+    if (head == 0)
     {
-        printf("list is empty\n");
+        printf("List is empty\n");
     }
     else
     {
-        struct node *temp = root;
-        while (temp->next != root)
+        struct node *temp = head;
+        while (temp->next != head)
         {
             printf("%d-->", temp->data);
             temp = temp->next;
         }
         printf("%d", temp->data);
     }
+    printf("\n");
 }
 
 int length(void)
 {
-    if (root == 0)
+    if (head == 0)
     {
-        printf("List is empty\n");
+        printf("The list is empty\n");
         return 0;
     }
     else
     {
-        struct node *temp = root;
+        struct node *temp = head;
         int i = 1;
-        while (temp->next != root)
+        while (temp->next != head)
         {
             i++;
             temp = temp->next;
