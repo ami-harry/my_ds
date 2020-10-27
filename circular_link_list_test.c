@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-void create(void);
+void append(void);
 void display(void);
 int length(void);
 
@@ -30,7 +30,7 @@ int main()
         switch (ch)
         {
         case 1:
-            create();
+            append();
             break;
         case 2:
             display();
@@ -51,7 +51,7 @@ int main()
     return 0;
 }
 
-void create(void)
+void append(void)
 {
     struct node *new;
     new = (struct node *)malloc(sizeof(struct node));
@@ -61,14 +61,13 @@ void create(void)
     if (head == 0)
     {
         head = tail = new;
-        // tail = new;
     }
     else
     {
         tail->next = new;
         tail = new;
-        tail->next = head;
     }
+    tail->next = head; // putting head in last node address
 }
 
 void display(void)
