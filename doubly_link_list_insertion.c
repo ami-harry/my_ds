@@ -5,6 +5,9 @@ void Insert_at_Begin(void);
 void Insert_at_Last(void);
 void Insert_at_Pos(void);
 void Insert_after_Pos(void);
+void delete_from_start(void);
+void delete_from_end(void);
+void delete_from_pos(void);
 void show(void);
 int len(void);
 
@@ -34,6 +37,9 @@ int main()
         printf("5. show\n");
         printf("6. len\n");
         printf("7. exit\n");
+        printf("8. delete from start\n");
+        printf("9. delete from end\n");
+        printf("10. delete from pos\n");
         printf("Enter your choice: ");
         scanf("%d", &ch);
         switch (ch)
@@ -63,7 +69,15 @@ int main()
             // printf("\nAddress of tail is %p", &tail);
             exit(0);
             break;
-
+        case 8:
+            delete_from_start();
+            break;
+        case 9:
+            delete_from_end();
+            break;
+        case 10:
+            delete_from_pos();
+            break;
         default:
             printf("invalid selection\n");
             break;
@@ -241,5 +255,83 @@ void Insert_after_Pos(void)
             newnode->right->left = newnode;
         }
         printf("One node inserted after %d pos\n", pos);
+    }
+}
+
+void delete_from_start(void)
+{
+    struct node *temp = head;
+    if (head == 0)
+    {
+        printf("List is empty\n");
+    }
+    else if (head->right == head)
+    {
+        head = tail = 0;
+        free(temp);
+    }
+    else
+    {
+        head = head->right;
+        head->left = tail;
+        tail->right = head;
+        free(temp);
+    }
+    printf("Node deleted from start\n");
+}
+void delete_from_end(void)
+{
+    struct node *temp = tail;
+    if (head == 0)
+    {
+        printf("List is empty\n");
+    }
+    else if (head->right == head)
+    {
+        head = temp = 0;
+        free(temp);
+    }
+    else
+    {
+        tail = tail->left;
+        tail->right = head;
+        head->left = tail;
+        free(temp);
+    }
+    printf("Node deleted from end\n");
+}
+void delete_from_pos(void)
+{
+    struct node *temp = head;
+    int pos, l = len();
+    printf("Enter position: ");
+    scanf("%d", &pos);
+    if (pos < 1 || pos > l)
+    {
+        printf("Enter valid position\n");
+    }
+    else if (pos == 1)
+    {
+        delete_from_start();
+    }
+    else
+    {
+        int i = 1;
+        while (i < pos)
+        {
+            temp = temp->right;
+        }
+        temp->left->right = temp->right;
+        temp->right->left = temp->left;
+        if (temp->right == head)
+        {
+            tail = temp->right;
+            free(temp);
+        }
+        else
+        {
+            free(temp);
+        }
+        printf("Node deleted from %d pos\n", pos);
     }
 }
