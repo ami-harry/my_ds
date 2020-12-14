@@ -108,9 +108,10 @@ void display()
         int i = front;
         while (i != rear)
         {
-            printf("%d", queue[i]);
+            printf("%d <--> ", queue[i]);
+            i = (i + 1) % N;
         }
-        printf(queue[rear]);
+        printf("%d\n", queue[rear]);
     }
     printf("\n");
 }
@@ -140,7 +141,6 @@ void peek()
     if (front == 1 && rear == -1)
     {
         printf("The queue is empty\n");
-        return 0;
     }
     else
     {
